@@ -33,14 +33,19 @@ public class ServerModule extends AbstractModule {
         install(new GlobalModule());
         install(new ChinaModule());
 
-        bind(PaymentService.class).to(PaymentServiceImpl.class);
+        try {
+            // 构造方法注入
+            bind(PaymentService.class).toConstructor(PaymentServiceImpl.class.getConstructor(Cache.class));
+        } catch (NoSuchMethodException e) {
+            addError(e);
+        }
         bind(PriceService.class).to(PriceServiceImpl.class);
         bind(OrderService.class).to(OrderServiceImpl.class);
         // 使用方法toProvider() 绑定
         // bind(PriceService.class).toProvider();
 
-        bind(new TypeLiteral<Cache<String,String>>(){})
-                .to(GuiceDemoCache.class);
+        // 使用泛型绑定
+        bind(new TypeLiteral<Cache<String,String>>(){}).to(GuiceDemoCache.class);
 
         LoggingInterceptor loggingInterceptor = new LoggingInterceptor();
         // 使用了成员变量注入

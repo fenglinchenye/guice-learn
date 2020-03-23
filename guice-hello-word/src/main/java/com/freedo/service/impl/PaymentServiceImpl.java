@@ -3,13 +3,10 @@ package com.freedo.service.impl;
 import com.freedo.service.PaymentService;
 import com.google.common.cache.Cache;
 
-import javax.inject.Inject;
-
 public class PaymentServiceImpl implements PaymentService {
 
     private final Cache<String,String> cache;
 
-    @Inject
     public PaymentServiceImpl(Cache<String, String> cache) {
         this.cache = cache;
     }
