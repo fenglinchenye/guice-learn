@@ -1,6 +1,5 @@
 package com.freedo;
 
-import com.freedo.MyApplet;
 import com.google.common.base.Joiner;
 import com.google.inject.Binder;
 import com.google.inject.Injector;

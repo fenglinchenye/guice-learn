@@ -20,6 +20,8 @@ import java.util.List;
 public class ServerModule extends AbstractModule {
 
     /**
+     *
+     * 在module 中避免使用条件关系，可以将不同的分支的module 拆分然后通过module之前的相互关系进行加载
      * Module 之前的相互关系
      * 1、并列 Guice.createInjector(module1,module2...)
      *    很多时候Module 会过多。可以利用嵌套到一个大的Module中。然后统一注入
@@ -33,6 +35,7 @@ public class ServerModule extends AbstractModule {
         install(new GlobalModule());
         install(new ChinaModule());
 
+        // 注入时尽量避免使用可能会关闭的资源 比如：Stream、IOStream
         try {
             // 构造方法注入
             bind(PaymentService.class).toConstructor(PaymentServiceImpl.class.getConstructor(Cache.class));
